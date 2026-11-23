@@ -1,5 +1,6 @@
 mod model;
 
+use model::{Card,Effect}
 fn main() {
-    println!("Hello, world!");
+    
 }

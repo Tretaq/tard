@@ -22,7 +22,8 @@ impl Card {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone)]// derive poies and pastes functions
+// debug tels rust how to pringt it (using {:?}) and Clone copies a variable and not just changes ownership
 pub struct Player {
     pub name: String,
     pub hp: i32,
@@ -44,5 +45,17 @@ impl Player {
             deck: Vec::new(),
             hand: Vec::new(),
         }
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct GameState {
+    pub players: Vec<Player>,
+    pub current: usize,
+    turn: u32,
+}
+impl GameState {
+    pub fn new() -> GameState {
+        
     }
 }
