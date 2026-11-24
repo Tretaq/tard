@@ -38,7 +38,7 @@ impl Player {
     pub fn new(name: &str) -> Player{
         Player{
             name: name.to_string(),
-            hp: 2,
+            hp: 20,
             shield: 0,
             mana: 0,
             max_mana: 0,
@@ -52,16 +52,35 @@ impl Player {
 pub struct GameState {
     pub players: Vec<Player>,
     pub current: usize,
-    turn: u32,
+    pub turn: u32,
 }
 impl GameState {
     pub fn new() -> GameState {
         GameState{
-            players: vec![// makes it a macro so it dosnt need to get a fixed num
+            players: vec![// makes it a macro so it runs at compile time and can allocate any num  WE USE MACRO SO THAT THE MAKES A FUNC WITH THAT MANY ARGUMENTSSSS IN COMPILER TIME
                 Player::new("You"), Player::new("Enemy"),
             ],
             current: 0,
             turn:1,
         }
     }
+}
+
+pub fn card_library() -> Vec<Card> {
+    vec![
+        Card::new("Goblin Stab",1, Effect::Damage(2)),
+        Card::new("Fireball", 4, Effect::Damage(6)),
+        Card::new("Healing Spring",3,Effect::Heal(5)),
+        Card::new("Stone Shield",2,Effect::Shield(4)),
+        Card::new("Ember Curse", 3, Effect::Burn {damage: 2, turns:3}),
+        Card::new("Scholar's Insight",2,Effect::Draw(2))
+    ]
+}
+pub fn build_deck() -> Vec<Card>{
+    let library = card_library();
+    let mut deck = Vec::new();
+    for i in 0..20 {
+        deck.push(library[i % library.len()].clone());
+    }
+    deck
 }
