@@ -1,3 +1,4 @@
+use rand::seq::SliceRandom;
 #[derive(Debug, Clone)]
 pub enum Effect {
     Damage(i32),
@@ -12,6 +13,13 @@ pub struct Card {
     pub cost: u32,
     pub effects: Effect,
 }
+#[derive(Debug,Clone,PartialEq)]
+pub enum DrawResult {
+    Drawn,
+    Burned,
+    DeckEmpty,
+}
+pub const MAX_HAND: usize = 5;
 impl Card {
     pub fn new(name: &str, cost: u32, effects: Effect) -> Card {
         Card{
@@ -45,6 +53,14 @@ impl Player {
             deck: Vec::new(),
             hand: Vec::new(),
         }
+    }
+    pub fn shuffle_deck(&mut self) {// mut self lets you read and modify without taking ownership || also thats how u can tell a func what can it do so like were useing mut so we can change it
+        let mut rng = rand::rng();
+        self.deck.shuffle(&mut rng);
+    }
+
+    pub fn draw_card(mut& self) -> DrawResult{
+        match  {  }
     }
 }
 
@@ -84,3 +100,4 @@ pub fn build_deck() -> Vec<Card>{
     }
     deck
 }
+
