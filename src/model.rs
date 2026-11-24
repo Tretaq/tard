@@ -1,4 +1,4 @@
-#[derive(Debug, Clone)] //
+#[derive(Debug, Clone)]
 pub enum Effect {
     Damage(i32),
     Heal(i32),
@@ -13,7 +13,7 @@ pub struct Card {
     pub effects: Effect,
 }
 impl Card {
-    pub fn new(name: String, cost: u32, effects: Effect) -> Card {
+    pub fn new(name: &str, cost: u32, effects: Effect) -> Card {
         Card{
             name: name.to_string(),
             cost,
@@ -56,6 +56,12 @@ pub struct GameState {
 }
 impl GameState {
     pub fn new() -> GameState {
-        
+        GameState{
+            players: vec![// makes it a macro so it dosnt need to get a fixed num
+                Player::new("You"), Player::new("Enemy"),
+            ],
+            current: 0,
+            turn:1,
+        }
     }
 }
