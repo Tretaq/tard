@@ -82,13 +82,19 @@ pub struct GameState {
 }
 impl GameState {
     pub fn new() -> GameState {
-        GameState{
-            players: vec![// makes it a macro so it runs at compile time and can allocate any num  WE USE MACRO SO THAT THE MAKES A FUNC WITH THAT MANY ARGUMENTSSSS IN COMPILER TIME
-                Player::new("You"), Player::new("Enemy"),
-            ],
+        let mut state = GameState{
+            players: vec![Player::new("You"),Player::new("Enemy")],
             current: 0,
-            turn:1,
+            turn: 1,
+        };
+        for player in state.players.iter_mut(){
+            player.deck = build_deck();
+            player.shuffle_deck();
+            for _ in 0..3 {
+                player.draw_card();
+            }
         }
+        state
     }
 }
 
