@@ -59,8 +59,18 @@ impl Player {
         self.deck.shuffle(&mut rng);
     }
 
-    pub fn draw_card(mut& self) -> DrawResult{
-        match  {  }
+    pub fn draw_card(&mut self) -> DrawResult{
+        match  self.deck.pop() {
+            None => DrawResult::DeckEmpty,
+            Some(card) => {
+                if self.hand.len() >= MAX_HAND {
+                    DrawResult::Burned
+                } else {
+                    self.hand.push(card);
+                    DrawResult::Drawn
+                }
+            }
+        }
     }
 }
 
