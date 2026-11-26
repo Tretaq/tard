@@ -79,6 +79,7 @@ pub struct GameState {
     pub players: Vec<Player>,
     pub current: usize,
     pub turn: u32,
+    pub winner: Option<usize>
 }
 impl GameState {
     pub fn new() -> GameState {
@@ -86,6 +87,7 @@ impl GameState {
             players: vec![Player::new("You"),Player::new("Enemy")],
             current: 0,
             turn: 1,
+            winner: None,
         };
         for player in state.players.iter_mut(){
             player.deck = build_deck();
@@ -95,6 +97,13 @@ impl GameState {
             }
         }
         state
+    }
+    pub fn start_turn(&mut self){
+        let current = self.current;
+        let player = &mut self.players[current];
+        player.max_mana = self.turn.min(10);
+        player.mana = player.max_mana;
+        player.draw_card();
     }
 }
 
