@@ -33,9 +33,18 @@ fn play_card(state: &mut GameState, index: usize) -> Result<(), GameError> {
     }
     let cost = state.players[cur].hand.len();
     if(state.players[cur].mana < cost){
-
+        return Err(GameError::NotEnoughMana {needed: cost, have: state.players[cur].mana})
     }
+    let card = state.players[cur].hand.remove(index);
+    state.players[cur].mana -= cost;
+    match card.effects{
+        Effect::Damage(amount) => {state.players[opp].hp -= amount;}, _ => {}
+    }
+    if(state.players[opp].hp <= 0){
+        state.winner = Some(cur);
+    }
+    Ok(())
 }
-fn end_turn(state: &mut next){
+fn end_turn(state: &mut GameState){
 
 }
