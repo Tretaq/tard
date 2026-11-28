@@ -1,5 +1,6 @@
 mod model;
 mod rules;
+mod ui;
 
 use model::{Card, Effect, GameState};
 use rules::{apply, Action};

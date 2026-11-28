@@ -1,3 +1,4 @@
+use std::fmt;
 use crate::model::{Effect, GameState};
 
 #[derive(Debug,Clone)]
@@ -51,4 +52,9 @@ fn end_turn(state: &mut GameState){
         state.turn += 1;
     }
     state.start_turn();
+}
+impl fmt::Display for GameError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        
+    }
 }
