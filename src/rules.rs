@@ -19,7 +19,7 @@ pub fn apply(state: &GameState, action: Action) -> Result<GameState, GameError>{
     }
     let mut next = state.clone();
     match action {
-        Action::PlayCard(index) => play_card(&mut next, index),
+        Action::PlayCard(index) => play_card(&mut next, index)?,
         Action::EndTurn => end_turn(&mut next),
     }
     Ok(next)
@@ -31,7 +31,7 @@ fn play_card(state: &mut GameState, index: usize) -> Result<(), GameError> {
     if(index >= state.players[cur].hand.len()){
         return Err(GameError::InvalidCardIndex)
     }
-    let cost = state.players[cur].hand.len();
+    let cost = state.players[cur].hand[index].cost;
     if(state.players[cur].mana < cost){
         return Err(GameError::NotEnoughMana {needed: cost, have: state.players[cur].mana})
     }
@@ -46,5 +46,9 @@ fn play_card(state: &mut GameState, index: usize) -> Result<(), GameError> {
     Ok(())
 }
 fn end_turn(state: &mut GameState){
-
+    state.current = 1 - state.current;
+    if state.current == 0 {
+        state.turn += 1;
+    }
+    state.start_turn();
 }
